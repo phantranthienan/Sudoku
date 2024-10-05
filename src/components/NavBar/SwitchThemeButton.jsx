@@ -16,7 +16,6 @@ const SwitchThemeButton = () => {
     <Button onClick={toggleTheme}>
       <ButtonIndicator isDarkTheme={isDarkTheme}>
         {isDarkTheme ? <FaMoon size="1rem" /> : <FaSun size="1rem" />}{' '}
-        {/* Kích thước icon dùng rem */}
       </ButtonIndicator>
     </Button>
   );
