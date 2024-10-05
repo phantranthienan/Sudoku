@@ -4,14 +4,19 @@ const GlobalStyles = createGlobalStyle`
     :root {
         --font-family: 'Popins', sans-serif;
 
-        --bg-main: #f5f5f5;
-        --text-color: #555555;
-        --line-color: #595959;
-        --info-value-color: #939393;
-        --fixed-value-color: #3a3a3a;
-        --editable-value-color: #1064cd;
-        --error-value-color: #d73157;
-        --cell-filled-color: #a8ccff;
+        --bg-main: ${({ theme }) => theme.background};
+        --text-color: ${({ theme }) => theme.text};
+        --line-color: ${({ theme }) => theme.line};
+        --info-color: ${({ theme }) => theme.info};
+        --fixed-color: ${({ theme }) => theme.fixed};
+        --editable-color: ${({ theme }) => theme.editable};
+        --error-color: ${({ theme }) => theme.error};
+        --cell-color: ${({ theme }) => theme.cell};
+        --cell-filled-color: ${({ theme }) => theme.filled};
+        --nav-color: ${({ theme }) => theme.navbar};
+        --pause-modal-bg: ${({ theme }) => theme.pauseModal};
+        --subtext-color: ${({ theme }) => theme.subtext};
+
         --blue-color: #0964cd;
 
         --nav-size: 70px;

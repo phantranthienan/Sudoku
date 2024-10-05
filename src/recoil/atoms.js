@@ -42,6 +42,11 @@ export const historyState = atom({
   default: [],
 });
 
+export const darkThemeState = atom({
+  key: 'darkThemeState',
+  default: false,
+});
+
 export const limitedHistoryState = selector({
   key: 'limitedHistoryState',
   get: ({ get }) => {

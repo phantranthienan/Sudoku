@@ -7,9 +7,9 @@ import {
   selectedCellState,
   solutionState,
   gameState,
-} from '../recoil/atoms';
+} from '../../recoil/atoms';
 
-import { GAMESTATES } from '../utils/constants';
+import { GAMESTATES } from '../../utils/constants';
 
 const SudokuBoard = () => {
   const [board, setBoard] = useRecoilState(boardState);
@@ -106,12 +106,14 @@ const GridCell = styled.input`
   text-align: center;
   font-size: var(--number-size);
   color: ${({ readOnly }) =>
-    readOnly ? 'var(--fixed-value-color)' : 'var(--editable-value-color)'};
-  color: ${(props) => props.$incorrect && 'var(--error-value-color)'};
-  color: ${(props) => props.$paused && 'white'};
+    readOnly ? 'var(--fixed-color)' : 'var(--editable-color)'};
+  color: ${(props) => props.$incorrect && 'var(--error-color)'};
+  color: ${(props) => props.$paused && 'var(--cell-color)'};
 
   background-color: ${(props) =>
-    props.$selected || props.$sameValue ? 'var(--cell-filled-color)' : 'white'};
+    props.$selected || props.$sameValue
+      ? 'var(--cell-filled-color)'
+      : 'var(--cell-color)'};
 
   caret-color: transparent;
   cursor: pointer;

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { selectedCellState, boardState } from '../recoil/atoms';
+import { selectedCellState, boardState } from '../../recoil/atoms';
 
-import { NUMBERS } from '../utils/constants';
+import { NUMBERS } from '../../utils/constants';
 
 import { FaDeleteLeft } from 'react-icons/fa6';
 
@@ -64,19 +64,22 @@ const NumpadContainer = styled.div`
 `;
 
 const NumpadButton = styled.button`
-  background-color: white;
-  height: calc(1.75 * var(--cell-size));
-  width: calc(1.25 * var(--cell-size));
-  color: var(--blue-color);
-  font-size: var(--number-size);
-  border-radius: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  height: calc(1.75 * var(--cell-size));
+  width: calc(1.25 * var(--cell-size));
+  border-radius: 0.5rem;
+
+  color: var(--editable-color);
+  font-size: var(--number-size);
+
+  background-color: var(--cell-color);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    filter: brightness(0.9);
   }
 `;
 

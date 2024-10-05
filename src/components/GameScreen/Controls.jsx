@@ -7,12 +7,12 @@ import {
   boardState,
   solutionState,
   selectedCellState,
-} from '../recoil/atoms';
+} from '../../recoil/atoms';
 
 import { FiRotateCcw, FiPauseCircle } from 'react-icons/fi';
 import { FaRegLightbulb } from 'react-icons/fa6';
 
-import { GAMESTATES } from '../utils/constants';
+import { GAMESTATES } from '../../utils/constants';
 
 const Controls = () => {
   const [board, setBoard] = useRecoilState(boardState);
@@ -94,7 +94,7 @@ const ControlButton = styled.button`
   }
 
   &:hover {
-    color: var(--blue-color);
+    color: var(--editable-color);
   }
 
   @media (max-height: 700px) {

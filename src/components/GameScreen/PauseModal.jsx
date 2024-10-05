@@ -7,9 +7,9 @@ import {
   boardState,
   timeState,
   limitedHistoryState,
-} from '../recoil/atoms';
+} from '../../recoil/atoms';
 
-import { GAMESTATES } from '../utils/constants';
+import { GAMESTATES } from '../../utils/constants';
 
 const PauseModal = () => {
   const [currentGameState, setGameState] = useRecoilState(gameState);
@@ -70,12 +70,16 @@ const ModalContent = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  height: 20rem;
+  height: 15rem;
   width: 15rem;
-  padding: 2rem;
+  padding: 1rem;
   border-radius: 10px;
 
-  background-color: white;
+  background-color: var(--pause-modal-bg);
+
+  h2 {
+    color: var(--subtext-color);
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -83,12 +87,11 @@ const ButtonWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
 `;
 
 const StyledButton = styled.button`
   height: 2.5rem;
-  width: 10rem;
+  width: 12rem;
   border: none;
   border-radius: 5px;
 
@@ -97,7 +100,9 @@ const StyledButton = styled.button`
     props.$variant === 'resume' ? 'white' : 'var(--blue-color)'};
 
   background-color: ${(props) =>
-    props.$variant === 'resume' ? 'var(--blue-color)' : 'white'};
+    props.$variant === 'resume'
+      ? 'var(--blue-color)'
+      : 'var(--pause-modal-bg)'};
 
   &:hover {
     filter: brightness(0.9);

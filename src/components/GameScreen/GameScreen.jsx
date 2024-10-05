@@ -6,7 +6,7 @@ import {
   timeState,
   boardState,
   solutionState,
-} from '../recoil/atoms';
+} from '../../recoil/atoms';
 
 import SudokuBoard from './SudokuBoard';
 import GameInfo from './GameInfo';
@@ -14,7 +14,7 @@ import Controls from './Controls';
 import NumPad from './Numpad';
 import PauseModal from './PauseModal';
 
-import { GAMESTATES } from '../utils/constants';
+import { GAMESTATES } from '../../utils/constants';
 
 const GameScreen = () => {
   const [currentGameState, setGameState] = useRecoilState(gameState);
@@ -37,7 +37,6 @@ const GameScreen = () => {
   }, [isGameRunning, setTime]);
 
   useEffect(() => {
-    console.log('check');
     const checkCompletion = () => {
       for (let row = 0; row < board.length; row++) {
         for (let col = 0; col < board[row].length; col++) {

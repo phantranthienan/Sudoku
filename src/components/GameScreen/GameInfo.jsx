@@ -1,7 +1,7 @@
 import Styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import { formatTimeState, difficultyState } from '../recoil/atoms';
+import { formatTimeState, difficultyState } from '../../recoil/atoms';
 
 const GameInfo = () => {
   const time = useRecoilValue(formatTimeState);
@@ -20,7 +20,7 @@ const GameInfoContainer = Styled.div`
   justify-content: space-between;
   align-items: center;
   width: calc(var(--cell-size) * 9);
-  color: var(--info-value-color);
+  color: var(--info-color);
 
   span {
     font-size: var(--info-size);

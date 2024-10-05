@@ -9,12 +9,12 @@ import {
   initialBoardState,
   timeState,
   limitedHistoryState,
-} from '../recoil/atoms';
+} from '../../recoil/atoms';
 
 import DifficultySelection from './DifficultySelection';
 
-import { generateSudokuBoard } from '../utils/sudoku';
-import { GAMESTATES } from '../utils/constants';
+import { generateSudokuBoard } from '../../utils/sudoku';
+import { GAMESTATES } from '../../utils/constants';
 
 const StartScreen = () => {
   const selectedDifficulty = useRecoilValue(difficultyState);
@@ -54,7 +54,7 @@ const Title = styled.h1`
   text-transform: uppercase;
 
   span {
-    color: var(--fixed-value-color);
+    color: var(--fixed-color);
   }
 `;
 

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { difficultyState } from '../recoil/atoms';
-import { DIFFICULTIES } from '../utils/constants';
+import { difficultyState } from '../../recoil/atoms';
+import { DIFFICULTIES } from '../../utils/constants';
 
 const DifficultySelection = () => {
   const [selectedDifficulty, setSelectedDifficulty] =
@@ -41,6 +41,7 @@ const SelectionContainer = styled.div`
   label {
     text-transform: capitalize;
     font-size: 1.2rem;
+    color: var(--subtext-color);
   }
 `;
 

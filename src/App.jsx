@@ -1,8 +1,12 @@
 import { useRecoilValue } from 'recoil';
+import { ThemeProvider } from 'styled-components';
 
-import { gameState } from './recoil/atoms';
+import { gameState, darkThemeState } from './recoil/atoms';
 
 import { GAMESTATES } from './utils/constants';
+import { lightTheme, darkTheme } from './styles/themes';
+
+import GlobalStyles from './styles/GlobalStyles';
 
 import NavBar from './components/NavBar';
 import MainContent from './components/MainContent';
@@ -12,6 +16,7 @@ import CompleteScreen from './components/CompleteScreen';
 
 const App = () => {
   const currentGameState = useRecoilValue(gameState);
+  const isDarkTheme = useRecoilValue(darkThemeState);
 
   const renderContent = () => {
     switch (currentGameState) {
@@ -29,10 +34,11 @@ const App = () => {
   };
 
   return (
-    <>
+    <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
+      <GlobalStyles />
       <NavBar />
       <MainContent>{renderContent()}</MainContent>
-    </>
+    </ThemeProvider>
   );
 };
 

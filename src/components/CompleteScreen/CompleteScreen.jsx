@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { gameState, difficultyState, timeState } from '../recoil/atoms';
+import { gameState, difficultyState, timeState } from '../../recoil/atoms';
 
-import { GAMESTATES } from '../utils/constants';
+import { GAMESTATES } from '../../utils/constants';
 
 const CompleteScreen = () => {
   const difficulty = useRecoilValue(difficultyState);
@@ -66,4 +66,5 @@ const NewGameButton = styled.button`
     filter: brightness(0.9);
   }
 `;
+
 export default CompleteScreen;

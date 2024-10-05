@@ -1,4 +1,4 @@
-import { CELLSREMOVED } from './constants';
+import { CELLSREMOVED, NUMBERS } from './constants';
 
 const isSafe = (board, row, col, value) => {
   for (let i = 0; i < 9; i++) {
@@ -48,7 +48,7 @@ const solveSudoku = (board) => {
 
   const [row, col] = emptyCell;
 
-  let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  let numbers = [...NUMBERS];
   shuffleArray(numbers);
 
   for (let value of numbers) {
