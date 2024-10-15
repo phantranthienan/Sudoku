@@ -7,6 +7,7 @@ import {
   boardState,
   solutionState,
   selectedCellState,
+  hintsState,
 } from '../../recoil/atoms';
 
 import { FiRotateCcw, FiPauseCircle } from 'react-icons/fi';
@@ -18,6 +19,7 @@ const Controls = () => {
   const [board, setBoard] = useRecoilState(boardState);
   const [history, setHistoryState] = useRecoilState(limitedHistoryState);
   const [currentGameState, setGameState] = useRecoilState(gameState);
+  const [hints, setHints] = useRecoilState(hintsState);
   const solution = useRecoilValue(solutionState);
   const setSelectedCell = useSetRecoilState(selectedCellState);
 
@@ -31,12 +33,14 @@ const Controls = () => {
   };
 
   const handleHint = () => {
+    if (hints === 0) return;
     let hintProvided = false;
     const newBoard = board.map((row, rowIndex) =>
       row.map((cell, colIndex) => {
         if (!hintProvided && cell.value === null && !cell.fixed) {
           hintProvided = true;
-          return { ...cell, value: solution[rowIndex][colIndex] }; // Use the correct value from the solution
+          setHints((prev) => prev - 1);
+          return { ...cell, value: solution[rowIndex][colIndex] };
         }
         return cell;
       })

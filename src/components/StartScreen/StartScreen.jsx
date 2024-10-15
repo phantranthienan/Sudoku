@@ -9,12 +9,14 @@ import {
   initialBoardState,
   timeState,
   limitedHistoryState,
+  errorsState,
+  hintsState
 } from '../../recoil/atoms';
 
 import DifficultySelection from './DifficultySelection';
 
 import { generateSudokuBoard } from '../../utils/sudoku';
-import { GAMESTATES } from '../../utils/constants';
+import { GAMESTATES, MAX_HINTS } from '../../utils/constants';
 
 const StartScreen = () => {
   const selectedDifficulty = useRecoilValue(difficultyState);
@@ -24,13 +26,17 @@ const StartScreen = () => {
   const setInitialBoardState = useSetRecoilState(initialBoardState);
   const setTime = useSetRecoilState(timeState);
   const setHistory = useSetRecoilState(limitedHistoryState);
+  const setErrors = useSetRecoilState(errorsState);
+  const setHints = useSetRecoilState(hintsState);
 
   const handleStartGame = () => {
-    setGameState(GAMESTATES.IN_PROGRESS);
     const { sudokuBoard, solution } = generateSudokuBoard(selectedDifficulty);
+    setGameState(GAMESTATES.IN_PROGRESS);
     setBoardState(sudokuBoard);
     setInitialBoardState(sudokuBoard);
     setSolutionState(solution);
+    setHints(MAX_HINTS);
+    setErrors(0);
     setTime(0);
     setHistory([]);
   };

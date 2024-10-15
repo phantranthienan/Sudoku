@@ -1,6 +1,5 @@
 import { atom, selector } from 'recoil';
-import { GAMESTATES } from '../utils/constants';
-import { HISTORY_MAX } from '../utils/constants';
+import { GAMESTATES, HISTORY_MAX, MAX_HINTS } from '../utils/constants';
 
 export const gameState = atom({
   key: 'gameState',
@@ -15,6 +14,16 @@ export const difficultyState = atom({
 export const timeState = atom({
   key: 'timeState',
   default: 0,
+});
+
+export const errorsState = atom({
+  key: 'errorsState',
+  default: 0,
+});
+
+export const hintsState = atom({
+  key: 'hintsState',
+  default: MAX_HINTS,
 });
 
 export const boardState = atom({

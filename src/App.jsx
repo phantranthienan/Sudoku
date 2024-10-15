@@ -12,7 +12,7 @@ import NavBar from './components/NavBar';
 import MainContent from './components/MainContent';
 import GameScreen from './components/GameScreen';
 import StartScreen from './components/StartScreen';
-import CompleteScreen from './components/CompleteScreen';
+import { CompleteScreen, FailScreen } from './components/EndScreen';
 
 const App = () => {
   const currentGameState = useRecoilValue(gameState);
@@ -28,6 +28,8 @@ const App = () => {
         return <GameScreen />;
       case GAMESTATES.COMPLETED:
         return <CompleteScreen />;
+      case GAMESTATES.FAILED:
+        return <FailScreen />;
       default:
         return null;
     }

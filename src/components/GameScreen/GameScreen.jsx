@@ -6,6 +6,7 @@ import {
   timeState,
   boardState,
   solutionState,
+  errorsState,
 } from '../../recoil/atoms';
 
 import SudokuBoard from './SudokuBoard';
@@ -14,12 +15,13 @@ import Controls from './Controls';
 import NumPad from './Numpad';
 import PauseModal from './PauseModal';
 
-import { GAMESTATES } from '../../utils/constants';
+import { GAMESTATES, MAX_ERRORS } from '../../utils/constants';
 
 const GameScreen = () => {
   const [currentGameState, setGameState] = useRecoilState(gameState);
   const board = useRecoilValue(boardState);
   const solution = useRecoilValue(solutionState);
+  const errors = useRecoilValue(errorsState);
   const setTime = useSetRecoilState(timeState);
 
   let isGameRunning = currentGameState === GAMESTATES.IN_PROGRESS;
@@ -50,11 +52,16 @@ const GameScreen = () => {
       }
       return true;
     };
-    console.log('checkCompletion');
     if (checkCompletion()) {
       setGameState(GAMESTATES.COMPLETED);
     }
   }, [board, solution, setGameState]);
+
+  useEffect(() => {
+    if (errors >= MAX_ERRORS) {
+      setGameState(GAMESTATES.FAILED);
+    }
+  }, [errors, setGameState]);
 
   return (
     <>

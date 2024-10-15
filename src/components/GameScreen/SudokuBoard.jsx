@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import {
   boardState,
+  errorsState,
   limitedHistoryState,
   selectedCellState,
   solutionState,
@@ -19,6 +20,7 @@ const SudokuBoard = () => {
   const [history, setHistory] = useRecoilState(limitedHistoryState);
   const solution = useRecoilValue(solutionState);
   const currentGameState = useRecoilValue(gameState);
+  const setErrors = useSetRecoilState(errorsState);
 
   const handleKeyPress = (rowIndex, colIndex) => (e) => {
     if (board[rowIndex][colIndex].fixed) {
@@ -26,9 +28,14 @@ const SudokuBoard = () => {
     }
 
     const key = e.key;
+
     if (/^[1-9]$/.test(key) || key === 'Backspace' || key === 'Delete') {
       e.preventDefault();
       const value = /^[1-9]$/.test(key) ? parseInt(key) : null;
+
+      const isIncorrect =
+        value !== null && value !== solution[rowIndex][colIndex];
+
       const updatedBoard = board.map((row, rIdx) =>
         row.map((cell, cIdx) => {
           return rIdx === rowIndex && cIdx === colIndex
@@ -38,11 +45,12 @@ const SudokuBoard = () => {
       );
 
       setBoard(updatedBoard);
-
+      if (isIncorrect) {
+        setErrors((prevErrors) => prevErrors + 1);
+      }
       if (JSON.stringify(updatedBoard) !== JSON.stringify(board)) {
         setHistory([...history, board]);
       }
-
       setSelectedCell({
         row: rowIndex,
         col: colIndex,

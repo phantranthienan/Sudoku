@@ -6,10 +6,12 @@ import {
   initialBoardState,
   boardState,
   timeState,
+  errorsState,
+  hintsState,
   limitedHistoryState,
 } from '../../recoil/atoms';
 
-import { GAMESTATES } from '../../utils/constants';
+import { GAMESTATES, MAX_HINTS } from '../../utils/constants';
 
 const PauseModal = () => {
   const [currentGameState, setGameState] = useRecoilState(gameState);
@@ -17,15 +19,19 @@ const PauseModal = () => {
   const setBoard = useSetRecoilState(boardState);
   const setTime = useSetRecoilState(timeState);
   const setHistory = useSetRecoilState(limitedHistoryState);
+  const setErrors = useSetRecoilState(errorsState);
+  const setHints = useSetRecoilState(hintsState);
 
   const handleResume = () => {
     setGameState(GAMESTATES.IN_PROGRESS);
   };
 
   const handleRestart = () => {
+    setGameState(GAMESTATES.IN_PROGRESS);
     setBoard(initialBoard);
     setTime(0);
-    setGameState(GAMESTATES.IN_PROGRESS);
+    setErrors(0);
+    setHints(MAX_HINTS);
     setHistory([]);
   };
 

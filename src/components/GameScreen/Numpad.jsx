@@ -42,7 +42,11 @@ const Numpad = () => {
           rIdx === row && cIdx === col ? { ...cell, value: null } : cell
         )
       );
+
       setBoard(updatedBoard);
+      if (JSON.stringify(updatedBoard) !== JSON.stringify(board)) {
+        setHistory([...history, board]);
+      }
       setSelectedCell({ row, col, value: null });
     }
   };
