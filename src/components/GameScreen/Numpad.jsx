@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 
-import { selectedCellState, boardState } from '../../recoil/atoms';
+import {
+  selectedCellState,
+  boardState,
+  limitedHistoryState,
+} from '../../recoil/atoms';
 
 import { NUMBERS } from '../../utils/constants';
 
@@ -10,6 +14,7 @@ import { FaDeleteLeft } from 'react-icons/fa6';
 const Numpad = () => {
   const [selectedCell, setSelectedCell] = useRecoilState(selectedCellState);
   const [board, setBoard] = useRecoilState(boardState);
+  const [history, setHistory] = useRecoilState(limitedHistoryState);
 
   const handleNumberClick = (number) => {
     const { row, col } = selectedCell;
@@ -23,6 +28,9 @@ const Numpad = () => {
     );
 
     setBoard(updatedBoard);
+    if (JSON.stringify(updatedBoard) !== JSON.stringify(board)) {
+      setHistory([...history, board]);
+    }
     setSelectedCell({ row, col, value: number });
   };
 
