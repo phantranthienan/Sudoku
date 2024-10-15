@@ -19,7 +19,7 @@ const Numpad = () => {
   const handleNumberClick = (number) => {
     const { row, col } = selectedCell;
 
-    if (row === null || col === null) return;
+    if (row === null || col === null || board[row][col].fixed) return;
 
     const updatedBoard = board.map((r, rIdx) =>
       r.map((cell, cIdx) =>

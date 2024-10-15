@@ -50,6 +50,7 @@ const GameScreen = () => {
       }
       return true;
     };
+    console.log('checkCompletion');
     if (checkCompletion()) {
       setGameState(GAMESTATES.COMPLETED);
     }
