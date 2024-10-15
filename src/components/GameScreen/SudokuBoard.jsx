@@ -9,6 +9,8 @@ import {
   gameState,
 } from '../../recoil/atoms';
 
+import SudokuCell from './SudokuCell';
+
 import { GAMESTATES } from '../../utils/constants';
 
 const SudokuBoard = () => {
@@ -18,46 +20,34 @@ const SudokuBoard = () => {
   const solution = useRecoilValue(solutionState);
   const currentGameState = useRecoilValue(gameState);
 
-  const handleInput = (rowIndex, colIndex) => {
-    return (e) => {
-      const value = e.target.value;
-      if (value === '' || /^[1-9]$/.test(value)) {
-        const updatedBoard = board.map((row, rowIdx) => {
-          return row.map((cell, colIdx) =>
-            rowIdx === rowIndex && colIdx === colIndex
-              ? { ...cell, value: value === '' ? null : parseInt(value) }
-              : cell
-          );
-        });
-
-        setBoard(updatedBoard);
-
-        if (JSON.stringify(updatedBoard) !== JSON.stringify(board)) {
-          setHistory([...history, board]); // Save current state before the change
-        }
-
-        setSelectedCell({
-          row: rowIndex,
-          col: colIndex,
-          value: value === '' ? null : parseInt(value),
-        });
-      }
-    };
-  };
-
   const handleKeyPress = (rowIndex, colIndex) => (e) => {
+    if (board[rowIndex][colIndex].fixed) {
+      return;
+    }
+
     const key = e.key;
-    if (key === 'Backspace' || key === 'Delete') {
+    if (/^[1-9]$/.test(key) || key === 'Backspace' || key === 'Delete') {
+      e.preventDefault();
+      const value = /^[1-9]$/.test(key) ? parseInt(key) : null;
       const updatedBoard = board.map((row, rIdx) =>
-        row.map((cell, cIdx) =>
-          rIdx === rowIndex && cIdx === colIndex
-            ? { ...cell, value: null }
-            : cell
-        )
+        row.map((cell, cIdx) => {
+          return rIdx === rowIndex && cIdx === colIndex
+            ? { ...cell, value }
+            : cell;
+        })
       );
-      setHistory([...history, board]);
+
       setBoard(updatedBoard);
-      setSelectedCell({ row: rowIndex, col: colIndex, value: null });
+
+      if (JSON.stringify(updatedBoard) !== JSON.stringify(board)) {
+        setHistory([...history, board]);
+      }
+
+      setSelectedCell({
+        row: rowIndex,
+        col: colIndex,
+        value,
+      });
     }
   };
 
@@ -71,24 +61,23 @@ const SudokuBoard = () => {
         {board.map((row, rowIndex) => {
           return row.map((cell, colIndex) => {
             return (
-              <GridCell
+              <SudokuCell
                 key={`${rowIndex}-${colIndex}`}
                 value={cell.value ? cell.value : ''}
                 readOnly={cell.fixed}
                 onClick={() => handleCellClick(rowIndex, colIndex, cell.value)}
-                onChange={handleInput(rowIndex, colIndex)}
                 onKeyDown={handleKeyPress(rowIndex, colIndex)}
-                $selected={
+                selected={
                   selectedCell.row === rowIndex && selectedCell.col === colIndex
                 }
-                $sameValue={
+                sameValue={
                   cell.value !== null && cell.value === selectedCell.value
                 }
-                $incorrect={
+                incorrect={
                   cell.value !== null &&
                   cell.value !== solution[rowIndex][colIndex]
                 }
-                $paused={currentGameState === GAMESTATES.PAUSED}
+                paused={currentGameState === GAMESTATES.PAUSED}
               />
             );
           });
@@ -97,64 +86,6 @@ const SudokuBoard = () => {
     </>
   );
 };
-
-const GridCell = styled.input`
-  height: var(--cell-size);
-  width: var(--cell-size);
-  border: 0.5px solid var(--line-color);
-
-  text-align: center;
-  font-size: var(--number-size);
-  color: ${({ readOnly }) =>
-    readOnly ? 'var(--fixed-color)' : 'var(--editable-color)'};
-  color: ${(props) => props.$incorrect && 'var(--error-color)'};
-  color: ${(props) => props.$paused && 'var(--cell-color)'};
-
-  background-color: ${(props) =>
-    props.$selected || props.$sameValue
-      ? 'var(--cell-filled-color)'
-      : 'var(--cell-color)'};
-
-  caret-color: transparent;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
-
-  /* Thicker right border on every 3rd column */
-  &:nth-child(3n) {
-    border-right: 3px solid var(--line-color);
-  }
-
-  /* Thicker bottom border on every 3rd row */
-  &:nth-child(n + 19):nth-child(-n + 27),
-  &:nth-child(n + 46):nth-child(-n + 54),
-  &:nth-child(n + 73):nth-child(-n + 81) {
-    border-bottom: 3px solid var(--line-color);
-  }
-
-  /* Remove double-thick left borders */
-  &:nth-child(3n + 1) {
-    border-left: none;
-  }
-
-  /* Add thick left border */
-  &:nth-child(9n + 1) {
-    border-left: 3px solid var(--line-color);
-  }
-
-  /* Remove double-thick top borders */
-  &:nth-child(n + 28):nth-child(-n + 36),
-  &:nth-child(n + 55):nth-child(-n + 63) {
-    border-top: none;
-  }
-
-  /* Add thick top border only */
-  &:nth-child(-n + 9) {
-    border-top: 3px solid var(--line-color);
-  }
-`;
 
 const GridBoard = styled.div`
   display: grid;

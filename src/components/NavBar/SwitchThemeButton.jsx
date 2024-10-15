@@ -14,7 +14,7 @@ const SwitchThemeButton = () => {
 
   return (
     <Button onClick={toggleTheme}>
-      <ButtonIndicator isDarkTheme={isDarkTheme}>
+      <ButtonIndicator>
         {isDarkTheme ? <FaMoon size="1rem" /> : <FaSun size="1rem" />}{' '}
       </ButtonIndicator>
     </Button>
