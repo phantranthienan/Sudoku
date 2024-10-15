@@ -1,10 +1,12 @@
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import {
   selectedCellState,
   boardState,
   limitedHistoryState,
+  solutionState,
+  errorsState,
 } from '../../recoil/atoms';
 
 import { NUMBERS } from '../../utils/constants';
@@ -15,11 +17,15 @@ const Numpad = () => {
   const [selectedCell, setSelectedCell] = useRecoilState(selectedCellState);
   const [board, setBoard] = useRecoilState(boardState);
   const [history, setHistory] = useRecoilState(limitedHistoryState);
+  const solution = useRecoilValue(solutionState);
+  const setErrors = useSetRecoilState(errorsState);
 
   const handleNumberClick = (number) => {
     const { row, col } = selectedCell;
 
     if (row === null || col === null || board[row][col].fixed) return;
+
+    const isIncorrect = number !== solution[row][col];
 
     const updatedBoard = board.map((r, rIdx) =>
       r.map((cell, cIdx) =>
@@ -28,6 +34,9 @@ const Numpad = () => {
     );
 
     setBoard(updatedBoard);
+    if (isIncorrect) {
+      setErrors((prevErrors) => prevErrors + 1);
+    }
     if (JSON.stringify(updatedBoard) !== JSON.stringify(board)) {
       setHistory([...history, board]);
     }
