@@ -1,12 +1,11 @@
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
-import { difficultyState } from '../../recoil/atoms';
+import { difficultyState } from '../../jotai/atoms'; // Make sure the path is correct
 import { DIFFICULTIES } from '../../utils/constants';
 
 const DifficultySelection = () => {
-  const [selectedDifficulty, setSelectedDifficulty] =
-    useRecoilState(difficultyState);
+  const [selectedDifficulty, setSelectedDifficulty] = useAtom(difficultyState);
 
   const handleSelectDifficulty = (e) => {
     setSelectedDifficulty(e.target.value);

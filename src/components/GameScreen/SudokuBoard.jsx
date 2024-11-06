@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import {
   boardState,
@@ -8,19 +8,19 @@ import {
   selectedCellState,
   solutionState,
   gameState,
-} from '../../recoil/atoms';
+} from '../../jotai/atoms';
 
 import SudokuCell from './SudokuCell';
 
 import { GAMESTATES } from '../../utils/constants';
 
 const SudokuBoard = () => {
-  const [board, setBoard] = useRecoilState(boardState);
-  const [selectedCell, setSelectedCell] = useRecoilState(selectedCellState);
-  const [history, setHistory] = useRecoilState(limitedHistoryState);
-  const solution = useRecoilValue(solutionState);
-  const currentGameState = useRecoilValue(gameState);
-  const setErrors = useSetRecoilState(errorsState);
+  const [board, setBoard] = useAtom(boardState);
+  const [selectedCell, setSelectedCell] = useAtom(selectedCellState);
+  const [history, setHistory] = useAtom(limitedHistoryState);
+  const [solution] = useAtom(solutionState);
+  const [currentGameState] = useAtom(gameState);
+  const [, setErrors] = useAtom(errorsState);
 
   const handleKeyPress = (rowIndex, colIndex) => (e) => {
     if (board[rowIndex][colIndex].fixed) {

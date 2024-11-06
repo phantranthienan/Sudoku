@@ -1,7 +1,7 @@
-import { useRecoilValue } from 'recoil';
+import { useAtom } from 'jotai';
 import { ThemeProvider } from 'styled-components';
 
-import { gameState, darkThemeState } from './recoil/atoms';
+import { gameState, darkThemeState } from './jotai/atoms';
 
 import { GAMESTATES } from './utils/constants';
 import { lightTheme, darkTheme } from './styles/themes';
@@ -15,8 +15,8 @@ import StartScreen from './components/StartScreen';
 import { CompleteScreen, FailScreen } from './components/EndScreen';
 
 const App = () => {
-  const currentGameState = useRecoilValue(gameState);
-  const isDarkTheme = useRecoilValue(darkThemeState);
+  const [currentGameState] = useAtom(gameState);
+  const [isDarkTheme] = useAtom(darkThemeState);
 
   const renderContent = () => {
     switch (currentGameState) {

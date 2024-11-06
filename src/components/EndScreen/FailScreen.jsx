@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useAtom } from 'jotai';
 
 import {
   gameState,
@@ -9,18 +9,18 @@ import {
   errorsState,
   hintsState,
   limitedHistoryState,
-} from '../../recoil/atoms';
+} from '../../jotai/atoms';
 
 import { GAMESTATES, MAX_HINTS } from '../../utils/constants';
 
 const FailScreen = () => {
-  const initialBoard = useRecoilValue(initialBoardState);
-  const setGameState = useSetRecoilState(gameState);
-  const setBoard = useSetRecoilState(boardState);
-  const setTime = useSetRecoilState(timeState);
-  const setHistory = useSetRecoilState(limitedHistoryState);
-  const setErrors = useSetRecoilState(errorsState);
-  const setHints = useSetRecoilState(hintsState);
+  const [initialBoard] = useAtom(initialBoardState);
+  const [, setGameState] = useAtom(gameState);
+  const [, setBoard] = useAtom(boardState);
+  const [, setTime] = useAtom(timeState);
+  const [, setHistory] = useAtom(limitedHistoryState);
+  const [, setErrors] = useAtom(errorsState);
+  const [, setHints] = useAtom(hintsState);
 
   const handleNewGame = () => {
     setGameState(GAMESTATES.NOT_STARTED);

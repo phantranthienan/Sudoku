@@ -1,13 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { RecoilRoot } from 'recoil';
-
+import { Provider } from 'jotai';
 import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RecoilRoot>
+    <Provider>
       <App />
-    </RecoilRoot>
+    </Provider>
   </StrictMode>
 );

@@ -1,14 +1,14 @@
 import Styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useAtom } from 'jotai';
 
-import { formatTimeState, hintsState, errorsState } from '../../recoil/atoms';
+import { formatTimeState, hintsState, errorsState } from '../../jotai/atoms';
 
 import { MAX_ERRORS } from '../../utils/constants';
 
 const GameInfo = () => {
-  const time = useRecoilValue(formatTimeState);
-  const errors = useRecoilValue(errorsState);
-  const hints = useRecoilValue(hintsState);
+  const [time] = useAtom(formatTimeState);
+  const [errors] = useAtom(errorsState);
+  const [hints] = useAtom(hintsState);
 
   return (
     <GameInfoContainer>

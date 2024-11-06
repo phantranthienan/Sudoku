@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import {
   selectedCellState,
@@ -7,18 +7,18 @@ import {
   limitedHistoryState,
   solutionState,
   errorsState,
-} from '../../recoil/atoms';
+} from '../../jotai/atoms';
 
 import { NUMBERS } from '../../utils/constants';
 
 import { FaDeleteLeft } from 'react-icons/fa6';
 
 const Numpad = () => {
-  const [selectedCell, setSelectedCell] = useRecoilState(selectedCellState);
-  const [board, setBoard] = useRecoilState(boardState);
-  const [history, setHistory] = useRecoilState(limitedHistoryState);
-  const solution = useRecoilValue(solutionState);
-  const setErrors = useSetRecoilState(errorsState);
+  const [selectedCell, setSelectedCell] = useAtom(selectedCellState);
+  const [board, setBoard] = useAtom(boardState);
+  const [history, setHistory] = useAtom(limitedHistoryState);
+  const [solution] = useAtom(solutionState);
+  const [, setErrors] = useAtom(errorsState);
 
   const handleNumberClick = (number) => {
     const { row, col } = selectedCell;

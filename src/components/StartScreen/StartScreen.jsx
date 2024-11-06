@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import {
   gameState,
@@ -10,8 +10,8 @@ import {
   timeState,
   limitedHistoryState,
   errorsState,
-  hintsState
-} from '../../recoil/atoms';
+  hintsState,
+} from '../../jotai/atoms';
 
 import DifficultySelection from './DifficultySelection';
 
@@ -19,15 +19,15 @@ import { generateSudokuBoard } from '../../utils/sudoku';
 import { GAMESTATES, MAX_HINTS } from '../../utils/constants';
 
 const StartScreen = () => {
-  const selectedDifficulty = useRecoilValue(difficultyState);
-  const setGameState = useSetRecoilState(gameState);
-  const setBoardState = useSetRecoilState(boardState);
-  const setSolutionState = useSetRecoilState(solutionState);
-  const setInitialBoardState = useSetRecoilState(initialBoardState);
-  const setTime = useSetRecoilState(timeState);
-  const setHistory = useSetRecoilState(limitedHistoryState);
-  const setErrors = useSetRecoilState(errorsState);
-  const setHints = useSetRecoilState(hintsState);
+  const [selectedDifficulty] = useAtom(difficultyState);
+  const [, setGameState] = useAtom(gameState);
+  const [, setBoardState] = useAtom(boardState);
+  const [, setSolutionState] = useAtom(solutionState);
+  const [, setInitialBoardState] = useAtom(initialBoardState);
+  const [, setTime] = useAtom(timeState);
+  const [, setHistory] = useAtom(limitedHistoryState);
+  const [, setErrors] = useAtom(errorsState);
+  const [, setHints] = useAtom(hintsState);
 
   const handleStartGame = () => {
     const { sudokuBoard, solution } = generateSudokuBoard(selectedDifficulty);

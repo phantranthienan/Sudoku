@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
-import { darkThemeState } from '../../recoil/atoms';
+import { darkThemeState } from '../../jotai/atoms';
 
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 const SwitchThemeButton = () => {
-  const [isDarkTheme, setIsDarkTheme] = useRecoilState(darkThemeState);
+  const [isDarkTheme, setIsDarkTheme] = useAtom(darkThemeState);
 
   const toggleTheme = () => {
     setIsDarkTheme((prev) => !prev);
@@ -15,7 +15,7 @@ const SwitchThemeButton = () => {
   return (
     <Button onClick={toggleTheme}>
       <ButtonIndicator>
-        {isDarkTheme ? <FaMoon size="1rem" /> : <FaSun size="1rem" />}{' '}
+        {isDarkTheme ? <FaMoon size="1rem" /> : <FaSun size="1rem" />}
       </ButtonIndicator>
     </Button>
   );
@@ -45,4 +45,5 @@ const ButtonIndicator = styled.div`
 
   color: ${({ theme }) => theme.buttonIconColor};
 `;
+
 export default SwitchThemeButton;

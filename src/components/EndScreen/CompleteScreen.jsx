@@ -1,14 +1,15 @@
 import styled from 'styled-components';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
-import { gameState, difficultyState, timeState } from '../../recoil/atoms';
+import { gameState, difficultyState, timeState } from '../../jotai/atoms';
 
 import { GAMESTATES } from '../../utils/constants';
 
 const CompleteScreen = () => {
-  const difficulty = useRecoilValue(difficultyState);
-  const time = useRecoilValue(timeState);
-  const setGameState = useSetRecoilState(gameState);
+  const [difficulty] = useAtom(difficultyState);
+  const [time] = useAtom(timeState);
+  const [, setGameState] = useAtom(gameState);
+
   return (
     <>
       <Title>congratulation!</Title>

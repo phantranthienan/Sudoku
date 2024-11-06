@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import {
   gameState,
@@ -9,18 +9,18 @@ import {
   errorsState,
   hintsState,
   limitedHistoryState,
-} from '../../recoil/atoms';
+} from '../../jotai/atoms';
 
 import { GAMESTATES, MAX_HINTS } from '../../utils/constants';
 
 const PauseModal = () => {
-  const [currentGameState, setGameState] = useRecoilState(gameState);
-  const initialBoard = useRecoilValue(initialBoardState);
-  const setBoard = useSetRecoilState(boardState);
-  const setTime = useSetRecoilState(timeState);
-  const setHistory = useSetRecoilState(limitedHistoryState);
-  const setErrors = useSetRecoilState(errorsState);
-  const setHints = useSetRecoilState(hintsState);
+  const [currentGameState, setGameState] = useAtom(gameState);
+  const [initialBoard] = useAtom(initialBoardState);
+  const [, setBoard] = useAtom(boardState);
+  const [, setTime] = useAtom(timeState);
+  const [, setHistory] = useAtom(limitedHistoryState);
+  const [, setErrors] = useAtom(errorsState);
+  const [, setHints] = useAtom(hintsState);
 
   const handleResume = () => {
     setGameState(GAMESTATES.IN_PROGRESS);
@@ -35,7 +35,7 @@ const PauseModal = () => {
     setHistory([]);
   };
 
-  if (currentGameState !== 'PAUSED') {
+  if (currentGameState !== GAMESTATES.PAUSED) {
     return null;
   }
 

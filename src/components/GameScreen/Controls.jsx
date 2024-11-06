@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import {
   limitedHistoryState,
@@ -8,7 +8,7 @@ import {
   solutionState,
   selectedCellState,
   hintsState,
-} from '../../recoil/atoms';
+} from '../../jotai/atoms';
 
 import { FiRotateCcw, FiPauseCircle } from 'react-icons/fi';
 import { FaRegLightbulb } from 'react-icons/fa6';
@@ -16,12 +16,12 @@ import { FaRegLightbulb } from 'react-icons/fa6';
 import { GAMESTATES } from '../../utils/constants';
 
 const Controls = () => {
-  const [board, setBoard] = useRecoilState(boardState);
-  const [history, setHistoryState] = useRecoilState(limitedHistoryState);
-  const [currentGameState, setGameState] = useRecoilState(gameState);
-  const [hints, setHints] = useRecoilState(hintsState);
-  const solution = useRecoilValue(solutionState);
-  const setSelectedCell = useSetRecoilState(selectedCellState);
+  const [board, setBoard] = useAtom(boardState);
+  const [history, setHistoryState] = useAtom(limitedHistoryState);
+  const [currentGameState, setGameState] = useAtom(gameState);
+  const [hints, setHints] = useAtom(hintsState);
+  const [solution] = useAtom(solutionState);
+  const [, setSelectedCell] = useAtom(selectedCellState);
 
   const handleUndo = () => {
     if (history.length > 0) {

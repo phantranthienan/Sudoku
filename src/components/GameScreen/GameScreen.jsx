@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import {
   gameState,
@@ -7,7 +7,7 @@ import {
   boardState,
   solutionState,
   errorsState,
-} from '../../recoil/atoms';
+} from '../../jotai/atoms';
 
 import SudokuBoard from './SudokuBoard';
 import GameInfo from './GameInfo';
@@ -18,11 +18,11 @@ import PauseModal from './PauseModal';
 import { GAMESTATES, MAX_ERRORS } from '../../utils/constants';
 
 const GameScreen = () => {
-  const [currentGameState, setGameState] = useRecoilState(gameState);
-  const board = useRecoilValue(boardState);
-  const solution = useRecoilValue(solutionState);
-  const errors = useRecoilValue(errorsState);
-  const setTime = useSetRecoilState(timeState);
+  const [currentGameState, setGameState] = useAtom(gameState);
+  const [board] = useAtom(boardState);
+  const [solution] = useAtom(solutionState);
+  const [errors] = useAtom(errorsState);
+  const [, setTime] = useAtom(timeState);
 
   let isGameRunning = currentGameState === GAMESTATES.IN_PROGRESS;
 

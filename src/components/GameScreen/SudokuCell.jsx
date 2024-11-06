@@ -35,23 +35,28 @@ const GridCell = styled.div`
   text-align: center;
   line-height: var(--cell-size);
   font-size: var(--number-size);
+  caret-color: transparent;
+  cursor: pointer;
+
   color: ${(props) =>
-    props.$readOnly ? 'var(--fixed-color)' : 'var(--editable-color)'};
-  color: ${(props) => props.$incorrect && 'var(--error-color)'};
-  color: ${(props) => props.$paused && 'var(--cell-color)'};
+    props.$paused
+      ? 'var(--cell-color)'
+      : props.$incorrect
+        ? 'var(--error-color)'
+        : props.$readOnly
+          ? 'var(--fixed-color)'
+          : 'var(--editable-color)'};
 
   background-color: ${(props) =>
     props.$selected || props.$sameValue
       ? 'var(--cell-filled-color)'
       : 'var(--cell-color)'};
 
-  caret-color: transparent;
-  cursor: pointer;
-
   &:focus {
     outline: none;
   }
 
+  /* Grid Borders */
   /* Thicker right border on every 3rd column */
   &:nth-child(3n) {
     border-right: 3px solid var(--line-color);
@@ -69,7 +74,7 @@ const GridCell = styled.div`
     border-left: none;
   }
 
-  /* Add thick left border */
+  /* Add thick left border on first cell of each row group */
   &:nth-child(9n + 1) {
     border-left: 3px solid var(--line-color);
   }
@@ -80,7 +85,7 @@ const GridCell = styled.div`
     border-top: none;
   }
 
-  /* Add thick top border only */
+  /* Add thick top border for the first row */
   &:nth-child(-n + 9) {
     border-top: 3px solid var(--line-color);
   }
