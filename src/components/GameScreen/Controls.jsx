@@ -34,17 +34,30 @@ const Controls = () => {
 
   const handleHint = () => {
     if (hints === 0) return;
-    let hintProvided = false;
-    const newBoard = board.map((row, rowIndex) =>
-      row.map((cell, colIndex) => {
-        if (!hintProvided && cell.value === null && !cell.fixed) {
-          hintProvided = true;
+    const emptyCells = [];
+    board.forEach((row, rowIndex) => {
+      row.forEach((cell, colIndex) => {
+        if (cell.value === null && !cell.fixed) {
+          emptyCells.push({ rowIndex, colIndex });
+        }
+      });
+    });
+
+    if (emptyCells.length === 0) return;
+
+    const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    const { rowIndex, colIndex } = randomCell;
+
+    const newBoard = board.map((row, rIdx) =>
+      row.map((cell, cIdx) => {
+        if (rIdx === rowIndex && cIdx === colIndex) {
           setHints((prev) => prev - 1);
           return { ...cell, value: solution[rowIndex][colIndex] };
         }
         return cell;
       })
     );
+
     setHistoryState([...history, board]);
     setBoard(newBoard);
   };
